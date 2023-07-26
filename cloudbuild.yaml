@@ -28,11 +28,16 @@ steps:
   - id: 'docker-run'
     name: 'gcr.io/cloud-builders/docker'
     args: ['run', 'gcr.io/${PROJECT_ID}/cicd:${SHORT_SHA}']
-  - id: test-cmd
+  - id: init-db
     name: gcr.io/${PROJECT_ID}/cicd:${SHORT_SHA}
     entrypoint: airflow
     dir: /workspace
     args: ['db', 'init']
+  - id: test-cmd
+    name: gcr.io/${PROJECT_ID}/cicd:${SHORT_SHA}
+    entrypoint: airflow
+    dir: /workspace
+    args: ['dags', 'list']
   # - id: init-db
   #   name: 'gcr.io/cloud-builders/docker'
   #   args: ['exec', 'gcr.io/${PROJECT_ID}/cicd:${SHORT_SHA}', 'airflow', 'db', 'init']
