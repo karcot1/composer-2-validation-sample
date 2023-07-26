@@ -18,10 +18,14 @@ steps:
   #   name: apache/airflow
   #   entrypoint: pip
   #   args: ["install", "apache-airflow"]
-  - id: init-db
+  - id: install-requirements
     name: apache/airflow
-    entrypoint: bash
-    args: ["airflow", "dags", "list"]
+    entrypoint: '/bin/bash'
+    dir: workspace
+    args:
+      '-c'
+      - |
+      pip install -r requirements.txt
   # - id: test-dags
   #   name: apache/airflow
   #   entrypoint: airflow
