@@ -23,9 +23,9 @@ steps:
     entrypoint: '/bin/bash'
     dir: workspace
     args:
-      '-c'
+      - '-c'
       - |
-      pip install -r requirements.txt
+        pip install -r requirements.txt
   # - id: test-dags
   #   name: apache/airflow
   #   entrypoint: airflow
