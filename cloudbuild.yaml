@@ -21,7 +21,7 @@ steps:
   - id: init-airflow-db
     name: python
     entrypoint: bash
-    args: ["airflow", "init", "db"]
+    args: ["apache-airflow", "init", "db"]
   - id: test-dags
     name: python
     entrypoint: bash
