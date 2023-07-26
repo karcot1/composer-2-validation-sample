@@ -21,7 +21,7 @@ steps:
   - id: init-db
     name: apache/airflow
     entrypoint: bash
-    args: ["airflow", "db", "init"]
+    args: ["airflow", "dags", "list"]
   # - id: test-dags
   #   name: apache/airflow
   #   entrypoint: airflow
