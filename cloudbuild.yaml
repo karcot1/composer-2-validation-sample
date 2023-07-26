@@ -36,7 +36,7 @@ steps:
   - id: test-cmd
     name: gcr.io/${PROJECT_ID}/cicd:${SHORT_SHA}
     entrypoint: airflow
-    dir: /workspace
+    dir: /workspace/DAGs/
     args: ['dags', 'list']
   # - id: init-db
   #   name: 'gcr.io/cloud-builders/docker'
