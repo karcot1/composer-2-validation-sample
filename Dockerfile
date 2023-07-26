@@ -18,12 +18,8 @@ FROM python:3.11
 ENV PYTHONUNBUFFERED True
 
 COPY requirements.txt ./
-COPY requirements-composer.txt ./
-COPY requirements-test.txt ./
 
 RUN pip install --no-cache-dir -r requirements.txt
-RUN pip install --no-cache-dir -r requirements-test.txt
-RUN pip install --no-cache-dir -r requirements-composer.txt
 
 #copy dag code to container image
 ENV DAGS /DAGs
