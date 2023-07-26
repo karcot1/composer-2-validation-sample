@@ -25,3 +25,5 @@ RUN pip install --no-cache-dir -r requirements.txt
 ENV DAGS /DAGs
 WORKDIR $DAGS
 COPY . ./
+
+CMD ["airflow", "dags", "list-import-errors", "--subdir", "dags/"]

@@ -17,9 +17,9 @@ steps:
   - id: docker-build
     name: 'gcr.io/cloud-builders/docker'
     args: ['build', '-t', 'gcr.io/${PROJECT_ID}/cicd:${SHORT_SHA}', '.'] # tag docker image with commit sha
-  - id: test-airflow
+  - id: 'test-airflow'
     name: 'gcr.io/cloud-builders/docker'
-    args: ['list-import-errors', '--subdir', 'dags/']
+    args: ['run', 'gcr.io/${PROJECT_ID}/cicd:${SHORT_SHA}']
   #   env:
   #     - PROJECT_ID=${_PROJECT_ID}
   #     - BQ_LOCATION=${_BQ_LOCATION}
