@@ -13,15 +13,14 @@
 # limitations under the License.
 
 steps:
-  - id: install-airflow
-    name: 'python'
-    args: ['-m', 'pip', 'install', '--upgrade', 'airflow']
+  # build the docker image
+  - id: docker-build
+    name: 'gcr.io/cloud-builders/docker'
+    args: ['build', '-t', 'gcr.io/${PROJECT_ID}/cicd:${SHORT_SHA}', '.'] # tag docker image with commit sha
   - id: test-airflow
-    name: apache/airflow
-    dir: /workspace
+    name: 'gcr.io/cloud-builders/docker'
     entrypoint: bash
-    args:
-      - run.sh
+    args: ['dags', 'list-import-errors', '--subdir', 'dags/']
   #   env:
   #     - PROJECT_ID=${_PROJECT_ID}
   #     - BQ_LOCATION=${_BQ_LOCATION}
