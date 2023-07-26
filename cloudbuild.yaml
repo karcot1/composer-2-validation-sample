@@ -29,6 +29,9 @@ steps:
   - id: docker-build
     name: 'gcr.io/cloud-builders/docker'
     args: ['build', '-t', 'gcr.io/${PROJECT_ID}/cicd:${SHORT_SHA}', '.'] # tag docker image with commit sha
+  - id: init-db
+    name: 'gcr.io/cloud-builders/docker'
+    args: ['exec', 'airflow', 'db', 'init']
   - id: 'test-airflow'
     name: 'gcr.io/cloud-builders/docker'
     args: ['run', 'gcr.io/${PROJECT_ID}/cicd:${SHORT_SHA}']
