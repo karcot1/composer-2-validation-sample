@@ -14,14 +14,14 @@
 
 steps:
   # build the docker image
-  - id: activate-airflow
+  - id: install-airflow
     name: apache/airflow
-    entrypoint: bash
-    args: ["eval", "$(register-python-argcomplete airflow)"]
+    entrypoint: pip
+    args: ["install", "apache-airflow"]
   - id: init-db
     name: apache/airflow
     entrypoint: airflow
-    args: ["init", "-db"]
+    args: ["db", "init"]
   - id: test-dags
     name: apache/airflow
     entrypoint: airflow
