@@ -18,23 +18,23 @@ steps:
   #   name: apache/airflow
   #   entrypoint: pip
   #   args: ["install", "apache-airflow"]
-  # - id: init-db
-  #   name: apache/airflow
-  #   entrypoint: airflow
-  #   args: ["db", "init"]
+  - id: init-db
+    name: apache/airflow
+    entrypoint: bash
+    args: ["airflow", "db", "init"]
   # - id: test-dags
   #   name: apache/airflow
   #   entrypoint: airflow
   #   args: ["dags", "list-import-errors", "--subdir", "dags/"]
-  - id: docker-build
-    name: 'gcr.io/cloud-builders/docker'
-    args: ['build', '-t', 'gcr.io/${PROJECT_ID}/cicd:${SHORT_SHA}', '.'] # tag docker image with commit sha
-  - id: 'docker-run'
-    name: 'gcr.io/cloud-builders/docker'
-    args: ['run', 'gcr.io/${PROJECT_ID}/cicd:${SHORT_SHA}']
-  - id: init-db
-    name: 'gcr.io/cloud-builders/docker'
-    args: ['exec', 'gcr.io/${PROJECT_ID}/cicd:${SHORT_SHA}', 'airflow', 'db', 'init']
+  # - id: docker-build
+  #   name: 'gcr.io/cloud-builders/docker'
+  #   args: ['build', '-t', 'gcr.io/${PROJECT_ID}/cicd:${SHORT_SHA}', '.'] # tag docker image with commit sha
+  # - id: 'docker-run'
+  #   name: 'gcr.io/cloud-builders/docker'
+  #   args: ['run', 'gcr.io/${PROJECT_ID}/cicd:${SHORT_SHA}']
+  # - id: init-db
+  #   name: 'gcr.io/cloud-builders/docker'
+  #   args: ['exec', 'gcr.io/${PROJECT_ID}/cicd:${SHORT_SHA}', 'airflow', 'db', 'init']
   #   env:
   #     - PROJECT_ID=${_PROJECT_ID}
   #     - BQ_LOCATION=${_BQ_LOCATION}
