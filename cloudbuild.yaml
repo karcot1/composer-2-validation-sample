@@ -21,11 +21,11 @@ steps:
   - id: install-requirements
     name: apache/airflow
     entrypoint: '/bin/bash'
-    dir: workspace
+    dir: /workspace
     args:
       - '-c'
       - |
-        pip install -r requirements.txt
+        pip install -r /workspace/requirements.txt
   # - id: test-dags
   #   name: apache/airflow
   #   entrypoint: airflow
