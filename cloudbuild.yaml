@@ -14,12 +14,24 @@
 
 steps:
   # build the docker image
-  - id: docker-build
-    name: 'gcr.io/cloud-builders/docker'
-    args: ['build', '-t', 'gcr.io/${PROJECT_ID}/cicd:${SHORT_SHA}', '.'] # tag docker image with commit sha
-  - id: 'test-airflow'
-    name: 'gcr.io/cloud-builders/docker'
-    args: ['run', 'gcr.io/${PROJECT_ID}/cicd:${SHORT_SHA}']
+  - id: install-dependencies
+    name: python
+    entrypoint: pip
+    args: ["install", "-r", "requirements.txt"]
+  - id: init-airflow-db
+    name: python
+    entrypoint: bash
+    args: ["airflow", "init", "db"]
+  - id: test-dags
+    name: python
+    entrypoint: bash
+    args: ["airflow", "dags", "list-import-errors", "--subdir", "dags/"]
+  # - id: docker-build
+  #   name: 'gcr.io/cloud-builders/docker'
+  #   args: ['build', '-t', 'gcr.io/${PROJECT_ID}/cicd:${SHORT_SHA}', '.'] # tag docker image with commit sha
+  # - id: 'test-airflow'
+  #   name: 'gcr.io/cloud-builders/docker'
+  #   args: ['run', 'gcr.io/${PROJECT_ID}/cicd:${SHORT_SHA}']
   #   env:
   #     - PROJECT_ID=${_PROJECT_ID}
   #     - BQ_LOCATION=${_BQ_LOCATION}
