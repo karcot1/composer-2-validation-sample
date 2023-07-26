@@ -32,7 +32,7 @@ steps:
     name: gcr.io/${PROJECT_ID}/cicd:${SHORT_SHA}
     entrypoint: airflow
     dir: /workspace
-    args: ['dags', 'list']
+    args: ['db', 'init']
   # - id: init-db
   #   name: 'gcr.io/cloud-builders/docker'
   #   args: ['exec', 'gcr.io/${PROJECT_ID}/cicd:${SHORT_SHA}', 'airflow', 'db', 'init']
