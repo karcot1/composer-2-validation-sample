@@ -13,14 +13,15 @@
 # limitations under the License.
 
 steps:
+  - id: install-airflow
+    name: 'python'
+    args: ['-m', 'pip', 'install', '--upgrade', 'airflow']
   - id: test-airflow
     name: apache/airflow
     dir: /workspace
     entrypoint: bash
     args:
-      - '-c'
-      - |
-        airflow dags list-import-errors --subdir /workspace/DAGs
+      - run.sh
   #   env:
   #     - PROJECT_ID=${_PROJECT_ID}
   #     - BQ_LOCATION=${_BQ_LOCATION}
