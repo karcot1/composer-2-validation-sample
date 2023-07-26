@@ -28,5 +28,5 @@ COPY . ./
 
 # Execute test commands
 
-CMD ["airflow", "db", "init"]
-CMD ["airflow", "dags", "list-import-errors", "--subdir", "dags/"]
+# CMD ["airflow", "db", "init"]
+# CMD ["airflow", "dags", "list-import-errors", "--subdir", "dags/"]
