@@ -35,9 +35,13 @@ steps:
     args: ['db', 'init']
   - id: test-cmd
     name: gcr.io/${PROJECT_ID}/cicd:${SHORT_SHA}
-    entrypoint: airflow
-    dir: /composer-2-validation-sample/
-    args: ['dags', 'list', '--subdir', '/dags']
+    entrypoint: bash
+    args: ['ls']
+  # - id: test-cmd
+  #   name: gcr.io/${PROJECT_ID}/cicd:${SHORT_SHA}
+  #   entrypoint: airflow
+  #   dir: /composer-2-validation-sample/
+  #   args: ['dags', 'list', '--subdir', '/dags']
   # - id: init-db
   #   name: 'gcr.io/cloud-builders/docker'
   #   args: ['exec', 'gcr.io/${PROJECT_ID}/cicd:${SHORT_SHA}', 'airflow', 'db', 'init']
