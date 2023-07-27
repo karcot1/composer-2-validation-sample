@@ -36,6 +36,7 @@ steps:
   - id: test-cmd
     name: gcr.io/${PROJECT_ID}/cicd:${SHORT_SHA}
     entrypoint: /bin/bash
+    dir: /workspace/DAGs
     args:
       - '-c'
       - |
