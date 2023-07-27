@@ -45,7 +45,7 @@ steps:
     name: gcr.io/${PROJECT_ID}/cicd:${SHORT_SHA}
     entrypoint: airflow
     dir: /workspace/DAGs
-    args: ['dags', 'list', '--subdir', '/workspace/DAGs']
+    args: ['dags', 'list-import-errors']
   # - id: init-db
   #   name: 'gcr.io/cloud-builders/docker'
   #   args: ['exec', 'gcr.io/${PROJECT_ID}/cicd:${SHORT_SHA}', 'airflow', 'db', 'init']
