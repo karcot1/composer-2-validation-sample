@@ -35,8 +35,11 @@ steps:
     args: ['db', 'init']
   - id: test-cmd
     name: gcr.io/${PROJECT_ID}/cicd:${SHORT_SHA}
-    entrypoint: bash
-    args: ['ls']
+    entrypoint: /bin/bash
+    args:
+      - '-c'
+      - |
+        ls
   # - id: test-cmd
   #   name: gcr.io/${PROJECT_ID}/cicd:${SHORT_SHA}
   #   entrypoint: airflow
