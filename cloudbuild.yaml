@@ -13,28 +13,35 @@
 # limitations under the License.
 
 steps:
-  - id: docker-build
-    name: 'gcr.io/cloud-builders/docker'
-    args: ['build', '-t', 'gcr.io/${PROJECT_ID}/cicd:${SHORT_SHA}', '.'] # tag docker image with commit sha
-    dir: /workspace
-  - id: 'docker-run'
-    name: 'gcr.io/cloud-builders/docker'
-    args: ['run', 'gcr.io/${PROJECT_ID}/cicd:${SHORT_SHA}']
-    dir: /workspace
-  - id: init-db
-    name: gcr.io/${PROJECT_ID}/cicd:${SHORT_SHA}
-    entrypoint: airflow
-    dir: /workspace/dags
-    args: ['db', 'init']
-  - id: list-dags
-    name: gcr.io/${PROJECT_ID}/cicd:${SHORT_SHA}
-    entrypoint: airflow
-    dir: /workspace/dags
-    args: ['dags', 'list', '--subdir', '/workspace/dags']
-  - id: check-syntax-errors
-    name: gcr.io/${PROJECT_ID}/cicd:${SHORT_SHA}
-    entrypoint: airflow
-    dir: /workspace/dags
-    args: ['dags', 'list-import-errors', '--subdir', '/workspace/dags']
+  # - id: docker-build
+  #   name: 'gcr.io/cloud-builders/docker'
+  #   args: ['build', '-t', 'gcr.io/${PROJECT_ID}/cicd:${SHORT_SHA}', '.'] # tag docker image with commit sha
+  #   dir: /workspace/dags
+  # - id: 'docker-run'
+  #   name: 'gcr.io/cloud-builders/docker'
+  #   args: ['run', 'gcr.io/${PROJECT_ID}/cicd:${SHORT_SHA}']
+  #   dir: /workspace/dags
+  # - id: init-db
+  #   name: gcr.io/${PROJECT_ID}/cicd:${SHORT_SHA}
+  #   entrypoint: airflow
+  #   dir: /workspace/dags
+  #   args: ['db', 'init']
+  # - id: list-dags
+  #   name: gcr.io/${PROJECT_ID}/cicd:${SHORT_SHA}
+  #   entrypoint: airflow
+  #   dir: /workspace/dags
+  #   args: ['dags', 'list', '--subdir', '/workspace/dags']
+  # - id: check-syntax-errors
+  #   name: gcr.io/${PROJECT_ID}/cicd:${SHORT_SHA}
+  #   entrypoint: airflow
+  #   dir: /workspace/dags
+  #   args: ['dags', 'list-import-errors', '--subdir', '/workspace/dags']
+  - id: copy-dags
+    name: 'gcr.io/cloud-builders/gsutil'
+    entrypoint: bash
+    args:
+    - '-c'
+    - |
+      gsutil -m cp -r '/workspace/dags' 'gs://us-central1-dag-test-env-65889705-bucket/data/test'
 options:
   logging: CLOUD_LOGGING_ONLY
