@@ -30,11 +30,11 @@ steps:
     name: gcr.io/${PROJECT_ID}/cicd:${SHORT_SHA}
     entrypoint: airflow
     dir: /workspace/dags
-    args: ['dags', 'list', --subdir', '/workspace/dags']
+    args: ['dags', 'list', '--subdir', '/workspace/dags']
   - id: check-syntax-errors
     name: gcr.io/${PROJECT_ID}/cicd:${SHORT_SHA}
     entrypoint: airflow
     dir: /workspace/dags
-    args: ['dags', 'list-import-errors', --subdir', '/workspace/dags']
+    args: ['dags', 'list-import-errors', '--subdir', '/workspace/dags']
 options:
   logging: CLOUD_LOGGING_ONLY
