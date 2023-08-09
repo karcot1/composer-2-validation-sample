@@ -43,5 +43,12 @@ steps:
     - '-c'
     - |
       gsutil -m cp -r '/workspace/DAGs/' 'gs://us-central1-dag-test-env-65889705-bucket/data/test'
+  - id: composer-test
+    name: 'gcr.io/cloud-builders/gsutil'
+    entrypoint: bash
+    args:
+    - '-c'
+    - |
+      gcloud composer environments run dag-test-env --location us-central1 dags list -- --subdir /home/airflow/gcs/data/test
 options:
   logging: CLOUD_LOGGING_ONLY
