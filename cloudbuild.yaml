@@ -49,7 +49,7 @@ steps:
     args:
     - '-c'
     - |
-      gcloud components intstall kubectl
+      gcloud components install kubectl
       gcloud composer environments run dag-test-env --location us-central1 dags list -- --subdir /home/airflow/gcs/data/test
 options:
   logging: CLOUD_LOGGING_ONLY
