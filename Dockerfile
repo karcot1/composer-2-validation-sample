@@ -21,11 +21,11 @@ COPY requirements.txt ./
 
 RUN pip install --no-cache-dir -r requirements.txt
 
-CMD ["apache-airflow", "db", "init"]
+CMD airflow db init
 
 COPY DAGs ./
 
-CMD ["apache-airflow", "dags", 'list']
+CMD airflow dags list --subdir DAGs
 
 
 # Copy dag code to container image
