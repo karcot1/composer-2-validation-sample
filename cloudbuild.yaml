@@ -28,8 +28,7 @@ steps:
   - id: list-dags
     name: gcr.io/${PROJECT_ID}/cicd:${SHORT_SHA}
     entrypoint: airflow
-    dir: /usr/src/dags
-    args: ['dags', 'list']
+    args: ['dags', 'list', '--subdir', '/usr/src/dags']
   # - id: check-syntax-errors
   #   name: gcr.io/${PROJECT_ID}/cicd:${SHORT_SHA}
   #   entrypoint: airflow

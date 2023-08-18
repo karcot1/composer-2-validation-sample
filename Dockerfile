@@ -26,6 +26,7 @@ COPY DAGs /usr/src/dags
 WORKDIR /usr/src/dags
 
 # Execute test commands
+CMD ["ls"]
 
 # CMD ["airflow", "db", "init"]
 # CMD ["airflow", "dags", "list-import-errors", "--subdir", "dags/"]
