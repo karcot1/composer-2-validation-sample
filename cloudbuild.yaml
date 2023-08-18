@@ -23,12 +23,11 @@ steps:
   # - id: init-db
   #   name: gcr.io/${PROJECT_ID}/cicd:${SHORT_SHA}
   #   entrypoint: airflow
-  #   dir: /usr/src/dags
   #   args: ['db', 'init']
-  - id: list-dags
-    name: gcr.io/${PROJECT_ID}/cicd:${SHORT_SHA}
-    entrypoint: airflow
-    args: ['dags', 'list', '--subdir', '/usr/src/dags']
+  # - id: list-dags
+  #   name: gcr.io/${PROJECT_ID}/cicd:${SHORT_SHA}
+  #   entrypoint: airflow
+  #   args: ['dags', 'list', '--subdir', '/usr/src/dags']
   # - id: check-syntax-errors
   #   name: gcr.io/${PROJECT_ID}/cicd:${SHORT_SHA}
   #   entrypoint: airflow
