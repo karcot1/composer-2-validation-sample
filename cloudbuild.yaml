@@ -29,7 +29,7 @@ steps:
     name: gcr.io/${PROJECT_ID}/cicd:${SHORT_SHA}
     entrypoint: airflow
     # dir: /workspace
-    args: ['dags', 'list', '--subdir', '/usr/scr/dags']
+    args: ['dags', 'list', '--subdir', '/usr/src/dags']
   # - id: check-syntax-errors
   #   name: gcr.io/${PROJECT_ID}/cicd:${SHORT_SHA}
   #   entrypoint: airflow
