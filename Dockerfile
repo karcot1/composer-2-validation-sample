@@ -23,6 +23,7 @@ RUN pip install --no-cache-dir -r requirements.txt
 
 # Copy dag code to container image
 COPY DAGs /usr/src/dags
+WORKDIR /usr/src/dags
 
 # Execute test commands
 
