@@ -24,8 +24,8 @@ RUN pip install --no-cache-dir -r requirements.txt
 # Copy dag code to container image
 COPY DAGs /usr/src/dags
 WORKDIR /usr/src/dags
-CMD ["airflow", "db", "init"]
-CMD ["airflow", "dags", 'list']
+CMD ["apache-airflow", "db", "init"]
+CMD ["apache-airflow", "dags", 'list']
 
 # Execute test commands
 
