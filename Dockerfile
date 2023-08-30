@@ -26,6 +26,6 @@ RUN mkdir dags
 
 COPY DAGs/*.py ./dags/
 
-COPY quickstart.sh/
+COPY quickstart.sh /
 
 CMD ["/quickstart.sh"]
