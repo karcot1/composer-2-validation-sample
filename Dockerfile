@@ -18,8 +18,6 @@ RUN pip install --upgrade pip
 # Allow statements and log messages to immediately appear in the Cloud Run logs
 ENV PYTHONUNBUFFERED True
 
-RUN chmod 0777 quickstart.sh
-
 COPY requirements.txt ./
 
 RUN pip install --no-cache-dir -r requirements.txt
@@ -29,5 +27,7 @@ RUN mkdir dags
 COPY DAGs/*.py ./dags/
 
 COPY quickstart.sh /
+
+RUN chmod 0777 /quickstart.sh
 
 CMD ["/quickstart.sh"]
