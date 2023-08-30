@@ -28,4 +28,4 @@ COPY DAGs/*.py ./dags/
 
 COPY quickstart.sh /
 
-CMD ["/quickstart.sh"]
+CMD ["quickstart.sh"]
