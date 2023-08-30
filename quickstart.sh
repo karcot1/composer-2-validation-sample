@@ -11,5 +11,6 @@ if [-s import_errors.txt]; then
     # exit 1
 else
     echo "No syntax errors found."
+fi
 
 echo "Validation ended at $(date)."
