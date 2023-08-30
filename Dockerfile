@@ -13,6 +13,7 @@
 # limitations under the License.
 
 FROM python:3.11
+RUN pip install --upgrade pip
 
 # Allow statements and log messages to immediately appear in the Cloud Run logs
 ENV PYTHONUNBUFFERED True
@@ -21,19 +22,10 @@ COPY requirements.txt ./
 
 RUN pip install --no-cache-dir -r requirements.txt
 
-COPY DAGs ./
+RUN mkdir dags
 
-CMD airflow db init
-CMD airflow dags list --subdir DAGs
+COPY DAGs/*.py ./dags/
 
+COPY quickstart.sh/
 
-# Copy dag code to container image
-# COPY DAGs /usr/src/dags
-# WORKDIR /usr/src/dags
-# CMD ["apache-airflow", "db", "init"]
-# CMD ["apache-airflow", "dags", 'list']
-
-# Execute test commands
-
-# CMD ["airflow", "db", "init"]
-# CMD ["airflow", "dags", "list-import-errors", "--subdir", "dags/"]
+CMD ["/quickstart.sh"]
