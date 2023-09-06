@@ -41,7 +41,7 @@ dag = DAG(
 ## Task 1: check that the github archive data has a dated table created for that date
 # To test this task, run this command:
 # docker-compose -f docker-compose-gcloud.yml run --rm webserver airflow test bigquery_github_trends bq_check_githubarchive_day 2018-12-01
-t1 = BigQyCheckOperator(
+t1 = BigQueryCheckOperator(
         task_id='bq_check_githubarchive_day',
         sql='''
         #standardSQL
