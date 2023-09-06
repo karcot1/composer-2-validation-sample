@@ -10,7 +10,7 @@ if [ -s import_errors.txt ]
 then
     echo "Error! DAGs have syntax errors. Please validate"
     cat import_errors.txt
-    #exit 1
+    exit 1
 else
     echo "No syntax errors found."
 fi
