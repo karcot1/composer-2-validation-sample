@@ -26,8 +26,8 @@ RUN mkdir dags
 
 COPY DAGs/*.py ./dags/
 
-COPY quickstart.sh /
+COPY dag_validation.py /
 
-RUN chmod 0777 /quickstart.sh
+RUN chmod 0777 /dag_validation.py
 
-CMD ["/quickstart.sh"]
+CMD ["/dag_validation.py"]
