@@ -20,7 +20,7 @@ steps:
     - '-c'
     - |
       gcloud components install kubectl
-      gcloud composer environments run composer-validation --location us-central1 dags list -- --subdir /home/airflow/gcs/data/test 
+      gcloud composer environments run composer-validation --location us-central1 dags list -- --subdir /home/airflow/gcs/data/test/dags 
 options:
   logging: CLOUD_LOGGING_ONLY
   pool:
