@@ -30,4 +30,4 @@ COPY dag_validation.py /
 
 RUN chmod 0777 /dag_validation.py
 
-CMD ["/dag_validation.py"]
+CMD ["python dag_validation.py"]
