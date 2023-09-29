@@ -29,7 +29,7 @@ class TestDagIntegrity(unittest.TestCase):
             raise AssertionError("DAG {} does not load within the threshold".format(self.dagbag.FileLoadStat.file))
     
     def test_dag_toplevelcode(self):
-        assert True
+        from tparse import TextParser
         #TODO: test whether python code has top level code or not
     
     def test_operator_cycles(module):
