@@ -1,6 +1,7 @@
 import os
 import logging
 import unittest
+import ast
 from airflow.models import DagBag
 from airflow import models
 from airflow.utils.dag_cycle_tester import test_cycle
@@ -9,6 +10,20 @@ logger = logging.getLogger()
 logger.setLevel(logging.INFO)
 logging.basicConfig(format='%(asctime)s %(message)s')
 
+def has_top_level_code(file_path):
+    with open(file_path, 'r') as file:
+        try:
+            parsed_code = ast.parse(file.read())
+            for node in parsed_code.body:
+                if isinstance(node, (ast.FunctionDef, ast.ClassDef, ast.Import, ast.ImportFrom)):
+                    print("File {} contains top-level code".format(file_path))
+                    return True
+                print("No top-level code detected")
+                return False
+        except SyntaxError:
+            #Syntax error in the file, it doesn't have top-level code
+            print("Syntax Error")
+            return False
 
 class TestDagIntegrity(unittest.TestCase):
     LOAD_SECOND_THRESHOLD = 2
@@ -24,13 +39,19 @@ class TestDagIntegrity(unittest.TestCase):
                 self.dagbag.import_errors
             )
         )
+
     def test_dag_loads_within_threshold(self):
         if self.dagbag.FileLoadStat.duration > self.LOAD_SECOND_THRESHOLD:
             raise AssertionError("DAG {} does not load within the threshold".format(self.dagbag.FileLoadStat.file))
     
     def test_dag_toplevelcode(self):
-        from tparse import TextParser
-        #TODO: test whether python code has top level code or not
+        assert True
+        folder_path = 'dags/'
+        for root, _, files in os.walk(folder_path):
+            for file in files:
+                file_path = os.path.join(root, file)
+                if file.path.endswith('.py'):
+                    self.assertTrue(has_top_level_code(file_path))
     
     def test_operator_cycles(module):
         no_dag_found = True
@@ -50,7 +71,5 @@ class TestDagIntegrity(unittest.TestCase):
     # def test_service_account_persmission_check(self):
     #     assert True
     #     #TODO: nice to have - verify service account permissions
-
-
 
 suite = unittest.TestLoader().loadTestsFromTestCase(TestDagIntegrity)
