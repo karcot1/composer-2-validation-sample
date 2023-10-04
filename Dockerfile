@@ -24,7 +24,7 @@ RUN pip install --no-cache-dir -r requirements.txt
 
 RUN mkdir dags
 
-COPY DAGs/*.py ./dags/
+COPY dags/*.py ./dags/
 
 COPY dag_validation.py /
 
