@@ -4,7 +4,7 @@ import unittest
 import ast
 from airflow.models import DagBag
 from airflow import models
-from airflow.utils.dag_cycle_tester import test_cycle
+from airflow.utils.dag_cycle_tester import check_cycle
 from datetime import datetime, timedelta
 
 logger = logging.getLogger()
@@ -48,17 +48,14 @@ class TestDagIntegrity(unittest.TestCase):
             'DAG load times are above the given threshold'
         )
     
-    # def test_op_cycles(self):
-    #     no_dag_found = True
-    #     for dag in vars(self.dagbag).values():
-    #         print(dag)
-    #         print(isinstance(dag, models.DAG))
-        #     if isinstance(dag, models.DAG):
-        #         no_dag_found = False
-        #         test_cycle(dag)  # Throws if a task cycle is found.
+    def test_dag_task_cycle(self):
+      no_dag_found = True
+      for dag in self.dagbag.dags:
+        no_dag_found = False
+        check_cycle(self.dagbag.dags[dag])  # Throws if a task cycle is found.
 
-        # if no_dag_found:
-        #     raise AssertionError("module does not contain a valid DAG")
+      if no_dag_found:
+          raise AssertionError("module does not contain a valid DAG")
     
     def test_dag_toplevelcode(self):
         assert True
@@ -78,8 +75,6 @@ class TestDagIntegrity(unittest.TestCase):
     # def test_service_account_persmission_check(self):
     #     assert True
     #     #TODO: nice to have - verify service account permissions
-
-# suite = unittest.TestLoader().loadTestsFromTestCase(TestDagIntegrity)
 
 if __name__ == '__main__':
     unittest.main()
