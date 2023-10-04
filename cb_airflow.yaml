@@ -20,17 +20,5 @@ steps:
     name: 'gcr.io/cloud-builders/docker'
     args: ['run', 'gcr.io/${PROJECT_ID}/cicd:${SHORT_SHA}']
     dir: /workspace
-  - id: copy-dags
-    name: 'gcr.io/cloud-builders/gsutil'
-    entrypoint: bash
-    args:
-    - '-c'
-    - |
-      gsutil -m cp -r '/workspace/DAGs/' 'gs://us-central1-composer-valida-64125794-bucket/data/test'
-  - id: push-success-message
-    name: "gcr.io/google.com/cloudsdktool/cloud-sdk"
-    dir: /workspace
-    entrypoint: gcloud
-    args: ['pubsub', 'topics', 'publish', 'composer-validation', '--message="SUCCESS"']
 options:
   logging: CLOUD_LOGGING_ONLY
