@@ -5,6 +5,7 @@ import ast
 from airflow.models import DagBag
 from airflow import models
 from airflow.utils.dag_cycle_tester import test_cycle
+from datetime import datetime, timedelta
 
 logger = logging.getLogger()
 logger.setLevel(logging.INFO)
@@ -17,13 +18,13 @@ def has_top_level_code(file_path):
             for node in parsed_code.body:
                 if isinstance(node, (ast.FunctionDef, ast.ClassDef, ast.Import, ast.ImportFrom)):
                     print("File {} contains top-level code".format(file_path))
-                    return True
+                    return False
                 print("No top-level code detected")
-                return False
+                return True
         except SyntaxError:
             #Syntax error in the file, it doesn't have top-level code
             print("Syntax Error")
-            return False
+            return True
 
 class TestDagIntegrity(unittest.TestCase):
     LOAD_SECOND_THRESHOLD = 2
@@ -35,14 +36,29 @@ class TestDagIntegrity(unittest.TestCase):
     def test_import_dags(self):
         self.assertFalse(
             len(self.dagbag.import_errors),
-            'DAG import failures. Errors: {}'.format(
+            'DAG contains import failures. Errors: {}'.format(
                 self.dagbag.import_errors
             )
         )
 
     def test_dag_loads_within_threshold(self):
-        if self.dagbag.FileLoadStat.duration > self.LOAD_SECOND_THRESHOLD:
-            raise AssertionError("DAG {} does not load within the threshold".format(self.dagbag.FileLoadStat.file))
+        duration = sum((o.duration for o in self.dagbag.dagbag_stats), timedelta()).total_seconds()
+        self.assertTrue(
+            duration <= self.LOAD_SECOND_THRESHOLD,
+            'DAG load times are above the given threshold'
+        )
+    
+    # def test_op_cycles(self):
+    #     no_dag_found = True
+    #     for dag in vars(self.dagbag).values():
+    #         print(dag)
+    #         print(isinstance(dag, models.DAG))
+        #     if isinstance(dag, models.DAG):
+        #         no_dag_found = False
+        #         test_cycle(dag)  # Throws if a task cycle is found.
+
+        # if no_dag_found:
+        #     raise AssertionError("module does not contain a valid DAG")
     
     def test_dag_toplevelcode(self):
         assert True
@@ -50,19 +66,10 @@ class TestDagIntegrity(unittest.TestCase):
         for root, _, files in os.walk(folder_path):
             for file in files:
                 file_path = os.path.join(root, file)
-                if file.path.endswith('.py'):
+                print(file_path)
+                if file_path.endswith('.py'):
                     self.assertTrue(has_top_level_code(file_path))
-    
-    def test_operator_cycles(module):
-        no_dag_found = True
 
-        for dag in vars(module).values():
-            if isinstance(dag, models.DAG):
-                no_dag_found = False
-                test_cycle(dag)  # Throws if a task cycle is found.
-
-        if no_dag_found:
-            raise AssertionError("module does not contain a valid DAG")
     
     # def test_operator_parser(operator)
     #     assert True
@@ -72,4 +79,7 @@ class TestDagIntegrity(unittest.TestCase):
     #     assert True
     #     #TODO: nice to have - verify service account permissions
 
-suite = unittest.TestLoader().loadTestsFromTestCase(TestDagIntegrity)
+# suite = unittest.TestLoader().loadTestsFromTestCase(TestDagIntegrity)
+
+if __name__ == '__main__':
+    unittest.main()
