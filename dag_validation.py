@@ -43,7 +43,7 @@ class TestDagIntegrity(unittest.TestCase):
 
     def test_dag_loads_within_threshold(self):
         duration = sum((o.duration for o in self.dagbag.dagbag_stats), timedelta()).total_seconds()
-        print('Duration = ' + duration)
+        print('Duration = ' + str(duration))
         self.assertTrue(
             duration <= self.LOAD_SECOND_THRESHOLD,
             'DAG load times are above the given threshold'
