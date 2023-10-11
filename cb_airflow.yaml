@@ -20,5 +20,12 @@ steps:
     name: 'gcr.io/cloud-builders/docker'
     args: ['run', 'gcr.io/${PROJECT_ID}/cicd:${SHORT_SHA}']
     dir: /workspace
+  - id: deploy-dags
+    name: 'gcr.io/cloud-builders/gsutil'
+    entrypoint: bash
+    args:
+    - '-c'
+    - |
+      gsutil -m cp -r '/workspace/DAGs/' 'gs://us-central1-dag-test-env-65889705-bucket/dags'
 options:
   logging: CLOUD_LOGGING_ONLY
