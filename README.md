@@ -22,8 +22,16 @@ When this repository is run through a CI/CD pipeline, the following steps will o
 To use this code as-is, please follow the steps below:
 1. Fork this repository in GitHub
 2. Connect your GitHub repository to GCP in the Cloud Build UI
-3. Create a Cloud Build Trigger in the GCP project that contains your composer environment. For "Configuration", select "Cloud Build configuraiton file (yaml or json)" and specify the location as "Repository". In the drop down box, select "cb_airflow.yaml"
-4. In "Substitution variables", set "_COMPOSER_BUCKET" to the GCS location of your Compoer 2 environment's Cloud Storage bucket.
+
+<img width="1042" alt="image" src="https://github.com/karcot1/composer-2-validation-sample/assets/111666655/6d5473f0-6324-4bc1-a8e7-a3cf669bf170">
+
+4. Create a Cloud Build Trigger in the GCP project that contains your composer environment. For "Configuration", select "Cloud Build configuraiton file (yaml or json)" and specify the location as "Repository". In the drop down box, select "cb_airflow.yaml"
+
+<img width="559" alt="image" src="https://github.com/karcot1/composer-2-validation-sample/assets/111666655/45dd0e4c-42c5-4be5-a622-efd2225b66df">
+
+5. In "Substitution variables", set "_COMPOSER_BUCKET" to the GCS location of your Compoer 2 environment's Cloud Storage bucket.
+
+<img width="546" alt="image" src="https://github.com/karcot1/composer-2-validation-sample/assets/111666655/b7583e12-c1ac-4ca8-aaf7-1cbb96b4cb0e">
 
 Once the trigger is created, run a manual execution to ensure all steps are working as expected.
 
