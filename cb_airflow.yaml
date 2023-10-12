@@ -26,6 +26,6 @@ steps:
     args:
     - '-c'
     - |
-      gsutil -m cp -r '/workspace/dags/' 'gs://us-central1-dag-test-env-65889705-bucket/dags'
+      gsutil -m cp -r '/workspace/dags/' '${_PROJECT_ID}/dags'
 options:
   logging: CLOUD_LOGGING_ONLY
